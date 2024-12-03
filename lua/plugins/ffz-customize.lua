@@ -11,7 +11,44 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    cmd = "Neotree",
+    dependencies = {
+      "s1n7ax/nvim-window-picker",
+      name = "window-picker",
+      event = "VeryLazy",
+      version = "2.*",
+      opts = {
+        hint = "floating-big-letter",
+        filter_rules = {
+          include_current_win = false,
+          autoselect_one = true,
+          -- filter using buffer options
+          bo = {
+            -- if the file type is one of following, the window will be ignored
+            -- filetype = { "neo-tree", "neo-tree-popup", "notify", "snacks_notif" },
+            filetype = {
+              "Trouble",
+              "alpha",
+              "dashboard",
+              "help",
+              "lazy",
+              "mason",
+              "neo-tree",
+              "notify",
+              "snacks_dashboard",
+              "snacks_notif",
+              "snacks_terminal",
+              "snacks_win",
+              "toggleterm",
+              "trouble",
+              "lspconfig",
+              "lsp_definitions",
+            },
+            -- if the buffer type is one of following, the window will be ignored
+            buftype = { "terminal", "quickfix" },
+          },
+        },
+      },
+    },
     keys = {
       { "<leader>fe", false },
       { "<leader>fE", false },
@@ -50,7 +87,7 @@ return {
           ["on"] = false,
           ["os"] = false,
           ["ot"] = false,
-          ["o"] = "open",
+          ["o"] = "open_with_window_picker",
           ["s"] = "open_split",
           ["v"] = "open_vsplit",
           ["l"] = false,
@@ -105,7 +142,7 @@ return {
     opts = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = { "<leader>cc", mode = { "n", "v" }, false }
-      keys[#keys + 1] = { "<leader>cC", mode = { "n", "v" }, false }
+      keys[#keys + 1] = { "<leader>cC", mode = { "n" }, false }
       keys[#keys + 1] = {
         "gd",
         function()
@@ -115,40 +152,55 @@ return {
         has = "definition",
       }
     end,
-    -- opts = function(_, opts)
-    --   opts.servers = {
-    --     -- pyright will be automatically installed with mason and loaded with lspconfig
-    --     pyright = {
-    --       settings = {
-    --         pyright = {
-    --           disableLanguageServices = false,
-    --           disableOrganizeImports = true,
-    --         },
-    --         python = {
-    --           analysis = {
-    --             autoImportCompletions = true,
-    --             diagnosticSeverityOverrides = {
-    --               reportArgumentType = "warning",
-    --               reportAssignmentType = "warning",
-    --             },
-    --           },
-    --         },
-    --       },
-    --     },
-    --   }
-    --   -- lsp keymap is different from other plugins, check https://www.lazyvim.org/plugins/lsp
-    --   local keys = require("lazyvim.plugins.lsp.keymaps").get()
-    --   keys[#keys + 1] = { "<leader>cc", false }
-    --   keys[#keys + 1] = { "<leader>cC", false }
-    --   keys[#keys + 1] = {
-    --     "gd",
-    --     function()
-    --       require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
-    --     end,
-    --     desc = "Goto Definition",
-    --     has = "definition",
-    --   }
-    -- end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        yamlls = {
+          settings = {
+            yaml = {
+              schemas = {
+                ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+                ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+                ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+                ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+                ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+                ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+                -- ["http://json-schema.org/draft-07/schema"] = "values.{yml,yaml}",
+                -- ["https://gist.githubusercontent.com/sargunv/c2ca41a08391cd06feaad97aece309e4/raw/empty-json-schema.json"] = "values.{yml,yaml}",
+                ["https://json.schemastore.org/yamllint.json"] = "values.{yml,yaml}",
+                kubernetes = "*.yaml",
+              },
+            },
+          },
+        },
+        -- pyright will be automatically installed with mason and loaded with lspconfig
+        -- pyright = {
+        --   settings = {
+        --     pyright = {
+        --       disableLanguageServices = false,
+        --       disableOrganizeImports = true,
+        --     },
+        --     python = {
+        --       analysis = {
+        --         autoImportCompletions = true,
+        --         diagnosticSeverityOverrides = {
+        --           reportArgumentType = "warning",
+        --           reportAssignmentType = "warning",
+        --         },
+        --       },
+        --     },
+        --   },
+        -- },
+      },
+    },
   },
   {
     "folke/which-key.nvim",
