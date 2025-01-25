@@ -5,6 +5,7 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 vim.g.root_spec = { "cwd" }
+vim.g.snacks_animate = false
 
 local opt = vim.opt
 opt.winbar = "%=%m %f"
@@ -12,3 +13,9 @@ opt.undofile = false
 opt.scrolloff = 10
 -- opt.splitright = false
 -- opt.splitbelow = false
+
+-- LSP Server to use for Python.
+-- Set to "basedpyright" to use basedpyright instead of pyright.
+vim.g.lazyvim_python_lsp = "pyright"
+-- Set to "ruff_lsp" to use the old LSP implementation version.
+vim.g.lazyvim_python_ruff = "ruff"
