@@ -9,6 +9,43 @@ return {
       },
     },
   },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "tokyonight-night",
+  --   },
+  -- },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      -- LazyVim will use these options when formatting with the conform.nvim formatter
+      default_format_opts = {
+        timeout_ms = 3000,
+        async = false, -- not recommended to change
+        quiet = false, -- not recommended to change
+      },
+      formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "isort", "ruff_format" },
+        --   python = function(bufnr)
+        --     if require("conform").get_formatter_info("ruff_format", bufnr).available then
+        --       return { "ruff_format" }
+        --     else
+        --       return { "isort", "black" }
+        --     end
+        --   end,
+        json = { "jq" },
+      },
+      -- The options you set here will be merged with the builtin formatters.
+      -- You can also define any custom formatters here.
+      formatters = {
+        injected = { options = { ignore_errors = true } },
+        black = {
+          prepend_args = { "--line-length", "120" },
+        },
+      },
+    },
+  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = {
@@ -72,6 +109,7 @@ return {
     opts = {
       close_if_last_window = true,
       filesystem = {
+        bind_to_cwd = true,
         window = {
           mappings = {
             ["."] = "toggle_hidden",
@@ -147,7 +185,7 @@ return {
       keys[#keys + 1] = {
         "gd",
         function()
-          require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
+          require("telescope.builtin").lsp_definitions({ jump_type = "vsplit", reuse_win = true })
         end,
         desc = "Goto Definition",
         has = "definition",
@@ -165,6 +203,34 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        pyright = {
+          settings = {
+            pyright = {
+              disableOrganizeImports = true,
+              disableTaggedHints = true,
+            },
+            python = {
+              analysis = {
+                typeCheckingMode = "standard",
+                -- 关闭与 Ruff 重叠的检查项
+                diagnosticSeverityOverrides = {
+                  reportUnusedVariable = "none", -- Ruff 处理未使用变量
+                  reportUnusedImport = "none", -- Ruff 处理未使用导入
+                  reportMissingParameterType = "none", -- Ruff 处理缺省参数
+                },
+              },
+            },
+          },
+        },
+        -- ruff = {
+        --   init_options = {
+        --     settings = {
+        --       lint = {
+        --         enable = false,
+        --       },
+        --     },
+        --   },
+        -- },
         yamlls = {
           settings = {
             yaml = {
@@ -187,24 +253,6 @@ return {
             },
           },
         },
-        -- pyright will be automatically installed with mason and loaded with lspconfig
-        -- pyright = {
-        --   settings = {
-        --     pyright = {
-        --       disableLanguageServices = false,
-        --       disableOrganizeImports = true,
-        --     },
-        --     python = {
-        --       analysis = {
-        --         autoImportCompletions = true,
-        --         diagnosticSeverityOverrides = {
-        --           reportArgumentType = "warning",
-        --           reportAssignmentType = "warning",
-        --         },
-        --       },
-        --     },
-        --   },
-        -- },
       },
     },
   },
