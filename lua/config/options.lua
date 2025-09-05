@@ -11,8 +11,8 @@ local opt = vim.opt
 opt.winbar = "%=%m %f"
 opt.undofile = false
 opt.scrolloff = 10
--- opt.splitright = false
--- opt.splitbelow = false
+opt.splitright = false
+opt.splitbelow = false
 
 -- LSP Server to use for Python.
 -- Set to "basedpyright" to use basedpyright instead of pyright.

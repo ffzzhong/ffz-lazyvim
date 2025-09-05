@@ -1,5 +1,6 @@
 return {
   { "ellisonleao/gruvbox.nvim" },
+  { "rebelot/kanagawa.nvim" },
   {
     "rainbowhxch/accelerated-jk.nvim",
     opts = {},

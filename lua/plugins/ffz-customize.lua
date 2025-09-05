@@ -9,12 +9,12 @@ return {
       },
     },
   },
-  -- {
-  --   "LazyVim/LazyVim",
-  --   opts = {
-  --     colorscheme = "tokyonight-night",
-  --   },
-  -- },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "kanagawa",
+    },
+  },
   {
     "stevearc/conform.nvim",
     opts = {
@@ -153,6 +153,8 @@ return {
         mappings = {
           i = {
             ["<esc>"] = require("telescope.actions").close,
+            -- shift-v to open in vsplit
+            ["<S-v>"] = "select_vertical",
           },
         },
       },
