@@ -179,27 +179,32 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = { "<leader>cc", mode = { "n", "v" }, false }
-      keys[#keys + 1] = { "<leader>cC", mode = { "n" }, false }
-      keys[#keys + 1] = { "gy", false }
-      keys[#keys + 1] = {
-        "gd",
-        function()
-          require("telescope.builtin").lsp_definitions({ jump_type = "vsplit", reuse_win = true })
-        end,
-        desc = "Goto Definition",
-        has = "definition",
-      }
-      keys[#keys + 1] = {
-        "gt",
-        function()
-          require("telescope.builtin").lsp_type_definitions({ jump_type = "vsplit" })
-        end,
-        desc = "Goto Type Definition",
-      }
-    end,
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            {
+              "gd",
+              function()
+                require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
+              end,
+              desc = "Goto Definition",
+              has = "definition",
+            },
+            {
+              "gt",
+              function()
+                require("telescope.builtin").lsp_type_definitions({ jump_type = "vsplit" })
+              end,
+              desc = "Goto Type Definition",
+            },
+            { "<leader>cc", mode = { "n", "v" }, false },
+            { "<leader>cC", mode = { "n" }, false },
+            { "gy", false },
+          },
+        },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
