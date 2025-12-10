@@ -13,6 +13,7 @@ opt.undofile = false
 opt.scrolloff = 10
 opt.splitright = false
 opt.splitbelow = false
+opt.wrap = true -- 开启自动换行
 
 -- LSP Server to use for Python.
 -- Set to "basedpyright" to use basedpyright instead of pyright.
