@@ -183,6 +183,14 @@ return {
       servers = {
         ["*"] = {
           keys = {
+            -- {
+            --   "gd",
+            --   function()
+            --     require("plugins.ffz-functions").OpenDefinitionInVSplit()
+            --   end,
+            --   desc = "Goto Definition (vsplit, reuse)",
+            --   has = "definition",
+            -- },
             {
               "gd",
               function()
@@ -194,11 +202,11 @@ return {
             {
               "gt",
               function()
-                require("telescope.builtin").lsp_type_definitions({ jump_type = "vsplit" })
+                require("telescope.builtin").lsp_type_definitions({ jump_type = "vsplit", reuse_win = true })
               end,
               desc = "Goto Type Definition",
             },
-            { "<leader>cc", mode = { "n", "v" }, false },
+            { "<leader>cc", mode = { "n", "x" }, false },
             { "<leader>cC", mode = { "n" }, false },
             { "gy", false },
           },
