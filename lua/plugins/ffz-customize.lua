@@ -183,22 +183,22 @@ return {
       servers = {
         ["*"] = {
           keys = {
-            -- {
-            --   "gd",
-            --   function()
-            --     require("plugins.ffz-functions").OpenDefinitionInVSplit()
-            --   end,
-            --   desc = "Goto Definition (vsplit, reuse)",
-            --   has = "definition",
-            -- },
             {
               "gd",
               function()
-                require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
+                require("config.ffz-functions").OpenDefinitionInVSplit()
               end,
-              desc = "Goto Definition",
+              desc = "Goto Definition (vsplit, reuse)",
               has = "definition",
             },
+            -- {
+            --   "gd",
+            --   function()
+            --     require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
+            --   end,
+            --   desc = "Goto Definition",
+            --   has = "definition",
+            -- },
             {
               "gt",
               function()
